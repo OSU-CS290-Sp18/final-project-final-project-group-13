@@ -1,20 +1,16 @@
-﻿<body>
-	<header class="post-heading">
-		<h1 class="page-post">
-			{{postTitle}}
-		</h1>
-		<h2 class="page-post">
-			{{postText}}
-		</h2>
-        <h4 class="page-author">
-            {{postAuthor}}
-        </h4>
-	</header>
-
-    <main class="post-responses">
-        {{#each responses}}
-            {{> response}}
-        {{/each}}
-	</main>
-</body>
-
+<header>
+	<h1 class="page-post">
+		{{postTitle}}
+	</h1>
+	<h2 class="page-post">
+		{{postText}}
+	</h2>
+	<h4 class="page-author">
+  	{{postAuthor}}
+	</h4>
+</header>
+<main class="post-responses">
+  {{#each responses}}
+      {{> response}}
+  {{/each}}
+</main>
