@@ -28,7 +28,12 @@ app.get('/', function (req, res) { //home page
     });
 });
 
-app.use(express.static('public')); //serve other files if requested 
+app.get('*', function (req, res) {
+  console.log('Page does not exist rendering 404 page.');
+  res.status(404).render('404');
+});
+
+app.use(express.static('public')); //serve other files if requested
 
 app.listen(port, function () {
     console.log("== Server is listening on port", port); //log successful launch

@@ -11,7 +11,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "handlebars views/layouts/base.handlebars -f public/base.js && handlebars views/partials/post.handlebars -f public/post.js && handlebars views/partials/response.handlebars -f public/response.js  && handlebars views/home.handlebars -f public/home.js && handlebars views/postPage.handlebars -f public/postPage.js",
+    "build": "handlebars views/layouts/base.handlebars -f public/base.js && handlebars views/partials/post.handlebars -f public/post.js && handlebars views/partials/response.handlebars -f public/response.js  && handlebars views/home.handlebars -f public/home.js && handlebars views/postPage.handlebars -f public/postPage.js && handlebars views/404.handlebars -f public/404.js",
     "prestart": "npm run build",
     "start": "node server.js"
   },
