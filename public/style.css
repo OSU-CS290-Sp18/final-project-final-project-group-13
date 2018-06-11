@@ -1,0 +1,44 @@
+header {
+	display: block
+	height: 80px;
+	padding: 10px;
+	border: none;
+	margin-left: 0px;
+	text-align: center;
+	color: white;
+	background-color: #544643;
+	}
+
+.create-post-b {
+	display: block;
+	height: 50px;
+	width: 50px;
+	border: 5px solid #dff4bc;
+	color: #dff4bc;
+	font-size: 36px;
+	font-weight: bold;
+	background-color: #544643; 
+	position: fixed;
+	top: 15px;
+	right: 15px;
+}
+
+.create-post-b:hover {
+	color: #544643;
+	text-transform: "add post";
+	background-color: #dff4bc;
+	border: 5px solid #544643;
+}
+	
+body {
+	margin: 0px;
+	background: url("http://images.all-free-download.com/images/graphicthumb/dog_foot_prints_background_repeating_design_6828604.jpg") repeat;
+	}
+
+.post-frame {
+	display: block;
+	background-color: white;
+	border: 1px solid grey;
+	margin: 25px;
+	padding: 10px;
+}
