@@ -1,32 +1,35 @@
-var http = require('http'); //require http, path, and fs
-var path = require('path');
-var fs = require('fs');
-var index = fs.readFileSync(path.join(__dirname + '/public/index.html')); //cache all files to vars
-var messageBoard = fs.readFileSync(path.join(__dirname + '/public/message_board.html'));
-var style = fs.readFileSync(path.join(__dirname + '/public/style.css'));
-var error404 = fs.readFileSync(path.join(__dirname + '/public/404.html'));
-console.log('Files cached'); //log cache complete
+var express = require('express'); //require express, express-handlebars
+var exphbs = require('express-handlebars');
+var postData = require("./postData"); //load twit data
 
+var app = express(); //setup and start server
+var port = process.env.PORT || 3000;
+app.engine('handlebars', exphbs({ defaultLayout: 'base' })); //set default page and view engine
+app.set('view engine', 'handlebars');
 
-var server = http.createServer(requestHandler); //create server
-server.listen(process.env.PORT || 3000); //launch listening on env PORT or 3000
-console.log('Server launched'); //log successful launch
-
-function requestHandler(req, res) {
-    var contents; 
-    if (req.url === '/index.html' || req.url === '/') { //check request url and set contents to correct file
-        contents = index;
-        res.statusCode = 200; //set status code
-    } else if (req.url === '/message_board.html') { //same for each different url
-        contents = messageBoard;
-        res.statusCode = 200;
-    } else if (req.url === '/style.css') {
-        contents = style;
-        res.statusCode = 200;
-    } else {
-        contents = error404;
-        res.statusCode = 404;
+app.get('/posts/:postID', function (req, res, next) {
+    console.log('Loading post page');
+    var postID = req.params.postID;
+    if(postData[postID]){
+        console.log('ID valid rendering post');
+        res.status(200).render('postPage', {
+            postTitle: postData[postID].postTitle,
+            postAuthor: postData[postID].postAuthor,
+            postText: postData[postID].postText,
+            responses: postData[postID].responses
+        });
     }
-    res.write(contents); //write contents
-    res.end(); //end request
-}
+});
+
+app.get('/', function (req, res) { //home page
+    console.log('Rendering templated home page'); //log
+    res.status(200).render('home', { //render page
+        posts: postData
+    });
+});
+
+app.use(express.static('public')); //serve other files if requested 
+
+app.listen(port, function () {
+    console.log("== Server is listening on port", port); //log successful launch
+});

@@ -1,0 +1,46 @@
+[
+    {
+        "postID": "0",
+        "postTitle": "Example Post 1",
+        "postAuthor": "Author 1",
+        "postText": "This is an example post description/text isn't it cool?",
+        "responses": [
+            {
+                "responseText": "hey this is a pretty cool post response",
+                "responseAuthor": "Ryan"
+            },
+            {
+                "responseText": "hey that's a pretty cool response ya got there Ryan",
+                "responseAuthor": "John"
+            }
+        ]
+    },
+    {
+        "postID": "1",
+        "postTitle": "Example Post 2",
+        "postAuthor": "Author 2",
+        "postText": "This is also an example post description/text as you can see it is in fact different.",
+        "responses": [
+            {
+                "responseText": "Whoa you can even have arrays within json arrays?",
+                "responseAuthor": "John"
+            },
+            {
+                "responseText": "Yeah but too bad we're gonna have to replace this with a MongoDB database :/",
+                "responseAuthor": "Ryan"
+            }
+        ]
+    },
+    {
+        "postID": "2",
+        "postTitle": "Example Post 3",
+        "postAuthor": "Author 3",
+        "postText": "It's actually a huge pain to input this all manually",
+        "responses": [
+            {
+                "responseText": "Yeah seriously who uses json anyway.",
+                "responseAuthor": "Ryan"
+            }
+        ]
+    }
+]
