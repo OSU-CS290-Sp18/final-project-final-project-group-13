@@ -30,12 +30,12 @@ function handlePost(){
 
     request.addEventListener('load', function(event){
       if(event.target.status === 200){
+        var id = event.target.response;
         let newPostContext = {
+          postID: id,
           postTitle: postTitle,
           postAuthor: postAuthor,
-          postText: postText,
-          responses: [],
-          postID: ""
+          postText: postText
         };
         var newPostHTML = Handlebars.templates.postTemplate(newPostContext);
         let postContainer = document.querySelector('.post-container');
