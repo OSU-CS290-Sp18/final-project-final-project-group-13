@@ -17,7 +17,7 @@ header {
 	color: #dff4bc;
 	font-size: 36px;
 	font-weight: bold;
-	background-color: #544643; 
+	background-color: #544643;
 	position: fixed;
 	top: 15px;
 	right: 15px;
@@ -29,7 +29,7 @@ header {
 	background-color: #dff4bc;
 	border: 5px solid #544643;
 }
-	
+
 body {
 	margin: 0px;
 	background: url("http://images.all-free-download.com/images/graphicthumb/dog_foot_prints_background_repeating_design_6828604.jpg") repeat;
@@ -41,4 +41,8 @@ body {
 	border: 1px solid grey;
 	margin: 25px;
 	padding: 10px;
+}
+
+.hidden{
+	display: none;
 }

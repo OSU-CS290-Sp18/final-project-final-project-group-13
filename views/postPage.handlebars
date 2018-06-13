@@ -14,3 +14,33 @@
       {{> response}}
   {{/each}}
 </main>
+
+<div id="reply-modal-backdrop" class="hidden"></div>
+	<div id="reply-modal" class="hidden">
+		<div class="reply-modal-dialog">
+
+			<div class="reply-modal-header">
+				<h3>Add a Reply</h3>
+				<button type="button" class ="reply-modal-close-button">&times;</button>
+			</div>
+
+
+			<div class="reply-modal-body">
+
+				<div class="reply-input-element">
+					<label for="reply-auth-input">Username</label>
+					<input type="text" id="reply-auth-input">
+				</div>
+
+				<div class="reply-input-element">
+					<label for="reply-text-input">Reply</label>
+					<input type="text" id="reply-text-input">
+				</div>
+			</div>
+
+				<div class = "reply-modal-footer">
+					<button type ="button" id="reply-modal-cancel" class ="reply-modal-hide action-button">Cancel</button>
+					<button type="button" id="reply-modal-accept" class="action-button">Add Post</button>
+				</div>
+		</div>
+	</div>
