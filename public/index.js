@@ -37,7 +37,7 @@ function handlePost(){
         let postContainer = document.querySelector('.post-container');
         postContainer.insertAdjacentHTML('beforeend', newPostHTML);
       }else{
-        alert("Error creating post.");
+        alert("Error creating post");
       }
     });
 
@@ -65,11 +65,28 @@ function handleReply(){
 
     request.open("POST", replyURL);
     let requestReplyBody = JSON.stringify({
+      responseText: responseText,
+      responseAuthor: responseAuthor
+    });
+    request.setRequestHeader('Content-Type','application/json');
 
-    })
+    request.addEventListener('load', function(event){
+      if(event.target.status === 200){
+        let newReplyContent = {
+          responseText: responseText,
+          responseAuthor: responseAuthor
+        };
+        var newReplyHTML = Handlebars.templates.response(newReplyHTML);
+        let replyContainer = document.querySelector('.post-responses');
+        replyContainer.insertAdjacentHTML('beforeend', newReplyHTML);
+      }else{
+        alert("There was an error creating your reply");
+      }
+    });
 
+    request.send(requestReplyBody);
+    hideReplyModal();
   }
-
 }
 
 /*------------------------- Post Modal ---------------------------*/
