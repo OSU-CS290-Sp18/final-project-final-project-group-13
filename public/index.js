@@ -77,7 +77,7 @@ function showPostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
-  let buttonHide = document.getElementById('create-post-b');
+  let buttonHide = document.querySelector('button');
   let headerHide = document.querySelector('header');
   let mainHide = document.querySelector('main');
 
@@ -100,7 +100,7 @@ function hidePostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
-  let buttonHide = document.getElementById('create-post-b');
+  let buttonHide = document.querySelector('button');
   let headerHide = document.querySelector('header');
   let mainHide = document.querySelector('main');
 
