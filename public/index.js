@@ -1,7 +1,3 @@
-function getPostID(){
-
-}
-
 function handlePost(){
   /*add post*/
   let postTitle = document.getElementById('post-title-input').value;
@@ -54,39 +50,43 @@ function handlePost(){
 
 function handleReply(){
   /*add reply*/
-  let replyAuthor = document.getElementById('reply-auth-input');
-  let replyText = document.getElementById('reply-text-input');
+  let responseAuthor = document.getElementById('reply-auth-input');
+  let responseText = document.getElementById('reply-text-input');
 
   if(!replyAuthor){
     replyAuthor = "Anonymous";
   }
-
   if(!replyText){
     alert("You have not filled in all required fields!");
   }
   else{
+    let request = new XMLHttpRequest();
+    let replyURL = location.pathname + "/addResponse";
+
+    request.open("POST", replyURL);
+    let requestReplyBody = JSON.stringify({
+
+    })
 
   }
 
 }
-
-
-function storePostDB(postID, postTitle, postAuthor, postText){
-
-}
-
-function storeReplyDB(responseText, responseAuthor){
-
-}
-
 
 /*------------------------- Post Modal ---------------------------*/
 function showPostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
-  console.log("reero");
+
+  let buttonHide = document.getElementById('create-post-b');
+  let headerHide = document.querySelector('header');
+  let mainHide = document.querySelector('main');
+
   modal.classList.remove('hidden');
   modalBackdrop.classList.remove('hidden');
+
+  buttonHide.classList.add('hidden');
+  headerHide.classList.add('hidden');
+  mainHide.classList.add('hidden');
 }
 
 function clearPostModal(){
@@ -100,10 +100,17 @@ function hidePostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
-  console.log("reerrrrrooooo");
+  let buttonHide = document.getElementById('create-post-b');
+  let headerHide = document.querySelector('header');
+  let mainHide = document.querySelector('main');
+
 
   modal.classList.add('hidden');
   modalBackdrop.classList.add('hidden');
+
+  buttonHide.classList.remove('hidden');
+  headerHide.classList.remove('hidden');
+  mainHide.classList.remove('hidden');
 
   clearPostModal();
 }
@@ -145,16 +152,16 @@ window.addEventListener('DOMContentLoaded', function(){
     postModalHideButtons[i].addEventListener('click', hidePostModal);
   }
 
-  if(location.pathname.includes("posts")){
-    let replyPostButton = document.getElementsByClassName('create-post-b');
-    replyPostButton[0].addEventListener('click', showReplyModal);
 
-    let replyModalAccept = document.getElementById('reply-modal-accept');
-    replyModalAccept.addEventListener('click', handleReply);
+  let replyPostButton = document.getElementsByClassName('create-reply-b');
+  replyPostButton[0].addEventListener('click', showReplyModal);
 
-    let replyModalHideButtons = document.getElementsByClassName('reply-modal-hide');
-    for(let i = 0; i < replyModalHideButtons.length; i++){
-      replyModalHideButtons[i].addEventListener('click', hideReplyModal);
-    }
+  let replyModalAccept = document.getElementById('reply-modal-accept');
+  replyModalAccept.addEventListener('click', handleReply);
+
+  let replyModalHideButtons = document.getElementsByClassName('reply-modal-hide');
+  for(let i = 0; i < replyModalHideButtons.length; i++){
+    replyModalHideButtons[i].addEventListener('click', hideReplyModal);
   }
+
 });
