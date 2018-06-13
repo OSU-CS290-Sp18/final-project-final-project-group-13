@@ -1,5 +1,3 @@
-
-
 function getPostID(){
 
 }
@@ -135,14 +133,27 @@ function hideReplyModal(){
 }
 
 window.addEventListener('DOMContentLoaded', function(){
-  var addPostButton = document.getElementsByClassName('create-post-b');
+  let addPostButton = document.getElementsByClassName('create-post-b');
   addPostButton[0].addEventListener('click', showPostModal);
 
-  var postModalAccept = document.getElementById('post-modal-accept');
+  let postModalAccept = document.getElementById('post-modal-accept');
   modalAccept.addEventListener('click', handlePost);
 
-  var postModalHideButtons = document.getElementsByClassName('post-modal-hide');
+  let postModalHideButtons = document.getElementsByClassName('post-modal-hide');
   for(let i = 0; i < postModalHideButtons.length; i++){
     postModalHideButtons[i].addEventListener('click', hidePostModal);
+  }
+
+  if(location.pathname.includes("posts")){
+    let replyPostButton = document.getElementsByClassName('create-post-b');
+    replyPostButton[0].addEventListener('click', showReplyModal);
+
+    let replyModalAccept = document.getElementById('reply-modal-accept');
+    replyModalAccept.addEventListener('click', handleReply);
+
+    let replyModalHideButtons = document.getElementsByClassName('reply-modal-hide');
+    for(let i = 0; i < replyModalHideButtons.length; i++){
+      replyModalHideButtons[i].addEventListener('click', hideReplyModal);
+    }
   }
 });
