@@ -1,7 +1,3 @@
-function getPostID(){
-
-}
-
 function handlePost(){
   /*add post*/
   let postTitle = document.getElementById('post-title-input').value;
@@ -76,24 +72,14 @@ function handleReply(){
 
 }
 
-
-function storePostDB(postID, postTitle, postAuthor, postText){
-
-}
-
-function storeReplyDB(responseText, responseAuthor){
-
-}
-
-
 /*------------------------- Post Modal ---------------------------*/
 function showPostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
   let buttonHide = document.getElementById('create-post-b');
-  let headerHide = document.header;
-  let mainHide = document.main;
+  let headerHide = document.querySelector('header');
+  let mainHide = document.querySelector('main');
 
   modal.classList.remove('hidden');
   modalBackdrop.classList.remove('hidden');
@@ -115,8 +101,8 @@ function hidePostModal(){
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
   let buttonHide = document.getElementById('create-post-b');
-  let headerHide = document.header;
-  let mainHide = document.main;
+  let headerHide = document.querySelector('header');
+  let mainHide = document.querySelector('main');
 
 
   modal.classList.add('hidden');
@@ -125,6 +111,7 @@ function hidePostModal(){
   buttonHide.classList.remove('hidden');
   headerHide.classList.remove('hidden');
   mainHide.classList.remove('hidden');
+
   clearPostModal();
 }
 /*------------------------ Reply Modal ---------------------------*/
