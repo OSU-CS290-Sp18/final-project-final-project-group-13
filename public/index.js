@@ -1,3 +1,4 @@
+/*---------------------------Handle Post-----------------------------*/
 function handlePost(){
   /*add post*/
   let postTitle = document.getElementById('post-title-input').value;
@@ -48,48 +49,9 @@ function handlePost(){
   }
 }
 
-function handleReply(){
-  /*add reply*/
-  let responseAuthor = document.getElementById('reply-auth-input');
-  let responseText = document.getElementById('reply-text-input');
+function handlePostDelete(){
 
-  if(!replyAuthor){
-    replyAuthor = "Anonymous";
-  }
-  if(!replyText){
-    alert("You have not filled in all required fields!");
-  }
-  else{
-    let request = new XMLHttpRequest();
-    let replyURL = location.pathname + "/addResponse";
-
-    request.open("POST", replyURL);
-    let requestReplyBody = JSON.stringify({
-      responseText: responseText,
-      responseAuthor: responseAuthor
-    });
-    request.setRequestHeader('Content-Type','application/json');
-
-    request.addEventListener('load', function(event){
-      if(event.target.status === 200){
-        let newReplyContent = {
-          responseText: responseText,
-          responseAuthor: responseAuthor
-        };
-        var newReplyHTML = Handlebars.templates.response(newReplyHTML);
-        let replyContainer = document.querySelector('.post-responses');
-        replyContainer.insertAdjacentHTML('beforeend', newReplyHTML);
-      }else{
-        alert("There was an error creating your reply");
-      }
-    });
-
-    request.send(requestReplyBody);
-    hideReplyModal();
-  }
 }
-
-/*------------------------- Post Modal ---------------------------*/
 function showPostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
@@ -131,7 +93,51 @@ function hidePostModal(){
 
   clearPostModal();
 }
-/*------------------------ Reply Modal ---------------------------*/
+/*------------------------- Handle Reply ----------------------------*/
+function handleReply(){
+  /*add reply*/
+  let responseAuthor = document.getElementById('reply-auth-input');
+  let responseText = document.getElementById('reply-text-input');
+
+  if(!replyAuthor){
+    replyAuthor = "Anonymous";
+  }
+  if(!replyText){
+    alert("You have not filled in all required fields!");
+  }
+  else{
+    let request = new XMLHttpRequest();
+    let replyURL = location.pathname + "/addResponse";
+
+    request.open("POST", replyURL);
+    let requestReplyBody = JSON.stringify({
+      responseText: responseText,
+      responseAuthor: responseAuthor
+    });
+    request.setRequestHeader('Content-Type','application/json');
+
+    request.addEventListener('load', function(event){
+      if(event.target.status === 200){
+        let newReplyContent = {
+          responseText: responseText,
+          responseAuthor: responseAuthor
+        };
+        var newReplyHTML = Handlebars.templates.response(newReplyHTML);
+        let replyContainer = document.querySelector('.post-responses');
+        replyContainer.insertAdjacentHTML('beforeend', newReplyHTML);
+      }else{
+        alert("There was an error creating your reply");
+      }
+    });
+
+    request.send(requestReplyBody);
+    hideReplyModal();
+  }
+}
+
+function handleReplyDelete(){
+
+}
 function showReplyModal(){
   let replyModal = document.getElementById('reply-modal');
   let replyModalBackdrop = document.getElementById('reply-modal-backdrop');
@@ -169,6 +175,9 @@ window.addEventListener('DOMContentLoaded', function(){
     for(let i = 0; i < postModalHideButtons.length; i++){
       postModalHideButtons[i].addEventListener('click', hidePostModal);
     }
+
+    let deletePostButton = document.getElementsByClassName('del-post-b');
+    deletePostButton.addEventListener('click', handlePostDelete);
   }
 
   if(window.location.href.includes('posts')){
@@ -182,5 +191,8 @@ window.addEventListener('DOMContentLoaded', function(){
     for(let i = 0; i < replyModalHideButtons.length; i++){
       replyModalHideButtons[i].addEventListener('click', hideReplyModal);
     }
+
+    let deleteReplyButton = document.getElementsByClassName('del-reply-b');
+    deleteReplyButton.addEventListener('click', handleReplyDelete);
   }
 });
