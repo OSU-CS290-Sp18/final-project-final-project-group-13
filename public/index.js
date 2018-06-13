@@ -141,27 +141,29 @@ function hideReplyModal(){
 }
 
 window.addEventListener('DOMContentLoaded', function(){
-  let addPostButton = document.getElementsByClassName('create-post-b');
-  addPostButton[0].addEventListener('click', showPostModal);
+  if(window.location.href.includes('posts') === false){
+    let addPostButton = document.getElementsByClassName('create-post-b');
+    addPostButton[0].addEventListener('click', showPostModal);
 
-  let postModalAccept = document.getElementById('post-modal-accept');
-  postModalAccept.addEventListener('click', handlePost);
+    let postModalAccept = document.getElementById('post-modal-accept');
+    postModalAccept.addEventListener('click', handlePost);
 
-  let postModalHideButtons = document.getElementsByClassName('post-modal-hide');
-  for(let i = 0; i < postModalHideButtons.length; i++){
-    postModalHideButtons[i].addEventListener('click', hidePostModal);
+    let postModalHideButtons = document.getElementsByClassName('post-modal-hide');
+    for(let i = 0; i < postModalHideButtons.length; i++){
+      postModalHideButtons[i].addEventListener('click', hidePostModal);
+    }
   }
 
+  if(window.location.href.includes('posts')){
+    let replyPostButton = document.getElementsByClassName('create-reply-b');
+    replyPostButton[0].addEventListener('click', showReplyModal);
 
-  let replyPostButton = document.getElementsByClassName('create-reply-b');
-  replyPostButton[0].addEventListener('click', showReplyModal);
+    let replyModalAccept = document.getElementById('reply-modal-accept');
+    replyModalAccept.addEventListener('click', handleReply);
 
-  let replyModalAccept = document.getElementById('reply-modal-accept');
-  replyModalAccept.addEventListener('click', handleReply);
-
-  let replyModalHideButtons = document.getElementsByClassName('reply-modal-hide');
-  for(let i = 0; i < replyModalHideButtons.length; i++){
-    replyModalHideButtons[i].addEventListener('click', hideReplyModal);
+    let replyModalHideButtons = document.getElementsByClassName('reply-modal-hide');
+    for(let i = 0; i < replyModalHideButtons.length; i++){
+      replyModalHideButtons[i].addEventListener('click', hideReplyModal);
+    }
   }
-
 });
