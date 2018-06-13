@@ -77,18 +77,25 @@ app.post('/addPost', function (req, res, next){
         } else {
             console.log("detected post req");
             var newID = parseInt(orderedArray[orderedArray.length - 1].postID)+1;
+            var stringID = newID.toString();
             var postObj = {
-              postID: newID,
-              postTitle: req.body.postText,
+              postID: stringID,
+              postTitle: req.body.postTitle,
               postAuthor: req.body.postAuthor,
-              postText: req.body.postText
+              postText: req.body.postText,
+              responses: []
             };
-            res.status(200).send("post added to database");
+            posts.insertOne(postObj);
+            res.status(200).send(stringID);
         }
     });
   }else{
     res.status(400).send("Add post request must specifiy a postTitle, postAuthor, and postText");
   }
+});
+
+app.get('/getId', function (req, res, next) {
+
 });
 
 app.use(express.static('public')); //serve other files if requested
