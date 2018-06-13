@@ -1,6 +1,7 @@
 <button type="button" class="create-reply-b"> Reply </button>
 
 <div class="post-container">
+
 	<h1 class="page-post-title">
 		{{postTitle}}
 	</h1>
@@ -13,6 +14,7 @@
 </div>
 <main class="post-responses">
   {{#each responses}}
+		<button type="button" class="del-reply-b">Delete</button>
       {{> response}}
   {{/each}}
 </main>
