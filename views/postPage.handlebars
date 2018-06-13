@@ -1,5 +1,7 @@
-<header>
-	<h1 class="page-post">
+<button type="button" class="create-reply-b"> Reply </button>
+
+<div class="post-container">
+	<h1 class="page-post-title">
 		{{postTitle}}
 	</h1>
 	<h2 class="page-post">
@@ -8,7 +10,7 @@
 	<h4 class="page-author">
   	{{postAuthor}}
 	</h4>
-</header>
+</div>
 <main class="post-responses">
   {{#each responses}}
       {{> response}}
@@ -21,7 +23,7 @@
 
 			<div class="reply-modal-header">
 				<h3>Add a Reply</h3>
-				<button type="button" class ="reply-modal-close-button">&times;</button>
+				<button type="button" class ="reply-modal-hide">&times;</button>
 			</div>
 
 
