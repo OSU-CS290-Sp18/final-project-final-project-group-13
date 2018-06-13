@@ -1,3 +1,5 @@
+
+
 function getPostID(){
 
 }
@@ -28,7 +30,7 @@ function handlePost(){
 
     request.addEventListener('load', function(event){
       if(event.target.status === 200){
-        let postTemplate = //do we have one of these
+        let postTemplate = Handlebars.templates.post;
         let newPostHTML = postTemplate({
           postTitle: postTitle,
           postAuthor: postAuthor,
@@ -83,7 +85,7 @@ function storeReplyDB(responseText, responseAuthor){
 function showPostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
-
+  console.log("reero");
   modal.classList.remove('hidden');
   modalBackdrop.classList.remove('hidden');
 }
@@ -99,12 +101,14 @@ function hidePostModal(){
   let modal = document.getElementById('post-modal');
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
+  console.log("reerrrrrooooo");
+
   modal.classList.add('hidden');
   modalBackdrop.classList.add('hidden');
 
   clearPostModal();
 }
-/*---------------------- Reply Modal ------------------------------*/
+/*------------------------ Reply Modal ---------------------------*/
 function showReplyModal(){
   let replyModal = document.getElementById('reply-modal');
   let replyModalBackdrop = document.getElementById('reply-modal-backdrop');
@@ -131,14 +135,14 @@ function hideReplyModal(){
 }
 
 window.addEventListener('DOMContentLoaded', function(){
-  var addPostButton = document.getElementById('create-post-b');
-  addPostButton.addEventListener('click', showPostModal);
+  var addPostButton = document.getElementsByClassName('create-post-b');
+  addPostButton[0].addEventListener('click', showPostModal);
 
   var postModalAccept = document.getElementById('post-modal-accept');
   modalAccept.addEventListener('click', handlePost);
 
   var postModalHideButtons = document.getElementsByClassName('post-modal-hide');
-  for(let i = 0; i < postModalHideButtons.length;i++){
+  for(let i = 0; i < postModalHideButtons.length; i++){
     postModalHideButtons[i].addEventListener('click', hidePostModal);
   }
 });

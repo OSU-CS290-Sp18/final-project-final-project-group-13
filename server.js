@@ -19,7 +19,7 @@ var posts;
 
 app.get('/posts/:postID', function (req, res, next) { //handle single post page
     var postID = req.params.postID; //get id
-    var postCursor = posts.find({ 
+    var postCursor = posts.find({
         postID: postID //find correct post
     });
     var postArray; //create array
@@ -43,7 +43,7 @@ app.get('/posts/:postID', function (req, res, next) { //handle single post page
 
 app.get('/', function (req, res) { //home page
     var postCursor = posts.find(); //create cursor and grab the whole database
-    var postArray; 
+    var postArray;
     postCursor.toArray(function (err, postArray) { //convert cursor to array
         if (err) {
             res.status(500).send("Error fetching posts from DB."); //handle errors
@@ -64,12 +64,12 @@ app.get('*', function (req, res) {
 });
 
 MongoClient.connect(mongoURL, function (err, client) { //connect to mongodb
-    if (err) { 
+    if (err) {
         throw err; //handle errors
     }
     db = mongoDBDatabase = client.db(mongoDBName); //initialize db
     posts = db.collection('posts'); //grab posts from database
-    app.listen(port, function () { 
+    app.listen(port, function () {
         console.log("== Server has connected with MongoDatabase");
         console.log("== Server is listening on port", port); //log successful launch
     });
