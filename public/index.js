@@ -17,9 +17,9 @@ function handlePost(){
   }else{
     let request = new XMLHttpRequest();
     let postID = getPostID();
-    let url // maybe not this
+    let postURL = '/addPost';
 
-    request.open("POST", /*something*/)
+    request.open("POST", postURL);
     let requestPostBody = JSON.stringify({
       postTitle: postTitle,
       postAuthor: postAuthor,
