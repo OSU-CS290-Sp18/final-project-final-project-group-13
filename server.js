@@ -7,7 +7,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'base' })); //set default page 
 app.set('view engine', 'handlebars'); //set view engin
 var MongoClient = require('mongodb').MongoClient; //get mongo client
 var bodyParser = require('body-parser');
-app.user(bodyParser.json());
+app.use(bodyParser.json());
 
 var mongoHost = process.env.MONGO_HOST; //set mongo variables
 var mongoPort = process.env.MONGO_PORT || 27017;
@@ -68,6 +68,7 @@ app.post('/posts/:postID/addResponse', function (req, res, next) {
 });
 
 app.post('/addPost', function (req, res, next){
+  console.log("detected post req");
   if(req.body && req.body.postTitle && req.body.postAuthor && req.body.postText){
     var orderedPosts = posts.find();
     var orderedArray;
@@ -82,6 +83,7 @@ app.post('/addPost', function (req, res, next){
               postAuthor: req.body.postAuthor,
               postText: req.body.postText
             };
+            res.status(200).send("post added to database");
         }
     });
   }else{
