@@ -68,7 +68,6 @@ app.post('/posts/:postID/addResponse', function (req, res, next) {
 });
 
 app.post('/addPost', function (req, res, next){
-  console.log("detected post req");
   if(req.body && req.body.postTitle && req.body.postAuthor && req.body.postText){
     var orderedPosts = posts.find();
     var orderedArray;
@@ -76,6 +75,7 @@ app.post('/addPost', function (req, res, next){
         if (err) {
             res.status(500).send("Error fetching posts from DB."); //handle any errors
         } else {
+            console.log("detected post req");
             var newID = parseInt(orderedArray[orderedArray.length - 1].postID)+1;
             var postObj = {
               postID: newID,
