@@ -5,7 +5,7 @@ function getPostID(){
 function handlePost(){
   /*add post*/
   let postTitle = document.getElementById('post-title-input').value;
-  let postAuthor = document.getElementById('post-auth-inpuit').value.trim();
+  let postAuthor = document.getElementById('post-auth-input').value.trim();
   let postText = document.getElementById('post-text-input').value.trim();
 
   if(!postAuthor){
@@ -16,7 +16,7 @@ function handlePost(){
     alert("You have not filled in all required fields!");
   }else{
     let request = new XMLHttpRequest();
-    let postID = getPostID();
+    //let postID = getPostID();
     let postURL = '/addPost';
 
     request.open("POST", postURL);
@@ -37,8 +37,7 @@ function handlePost(){
 
         let postContainer = document.querySelector('.post-container');
         postContainer.insertAdjacentHTML('beforeend', newPostHTML);
-      }
-      else{
+      }else{
         alert("Error creating post.");
       }
     });
@@ -137,7 +136,7 @@ window.addEventListener('DOMContentLoaded', function(){
   addPostButton[0].addEventListener('click', showPostModal);
 
   let postModalAccept = document.getElementById('post-modal-accept');
-  modalAccept.addEventListener('click', handlePost);
+  postModalAccept.addEventListener('click', handlePost);
 
   let postModalHideButtons = document.getElementsByClassName('post-modal-hide');
   for(let i = 0; i < postModalHideButtons.length; i++){
