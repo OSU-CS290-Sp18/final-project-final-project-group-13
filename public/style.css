@@ -9,29 +9,36 @@ header {
 	background-color: #544643;
 	}
 
+.page-title {
+	font-weight: 400;
+}
+
 .create-post-b {
 	display: block;
 	height: 50px;
 	width: 50px;
-	border: 5px solid #dff4bc;
+	border: 2px solid #dff4bc;
 	color: #dff4bc;
-	font-size: 36px;
+	font-size: 42px;
 	font-weight: bold;
 	background-color: #544643;
 	position: fixed;
-	top: 15px;
-	right: 15px;
+	bottom: 15px;
+	left: 15px;
+	border-radius: 5px;
 }
 
 .create-post-b:hover {
 	color: #544643;
-	text-transform: "add post";
 	background-color: #dff4bc;
-	border: 5px solid #544643;
+	border: 2px solid #544643;
+	cursor: pointer;
 }
 
 body {
 	margin: 0px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
 	background: url("http://images.all-free-download.com/images/graphicthumb/dog_foot_prints_background_repeating_design_6828604.jpg") repeat;
 	}
 
@@ -40,7 +47,28 @@ body {
 	background-color: white;
 	border: 1px solid grey;
 	margin: 25px;
-	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.post-title a{
+	font-weight: 700;
+	font-size: 20px;
+	text-decoration: none;
+	color: black;
+}
+
+.post-title a:hover{
+	color: #544643;
+	cursor: pointer;
+}
+
+.post-author {
+	font-weight: 300;
+	font-size: 12px;
+	font-color: black;
 }
 
 .hidden{
