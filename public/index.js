@@ -23,18 +23,21 @@ function handlePost(){
     let requestPostBody = JSON.stringify({
       postTitle: postTitle,
       postAuthor: postAuthor,
-      postText: postText
+      postText: postText,
+      responses: []
     });
+    request.setRequestHeader('Content-Type','application/json');
 
     request.addEventListener('load', function(event){
       if(event.target.status === 200){
-        let postTemplate = Handlebars.templates.post;
-        let newPostHTML = postTemplate({
+        let newPostContext = {
           postTitle: postTitle,
           postAuthor: postAuthor,
-          postText: postText
-        });
-
+          postText: postText,
+          responses: [],
+          postID: ""
+        };
+        var newPostHTML = Handlebars.templates.postTemplate(newPostContext);
         let postContainer = document.querySelector('.post-container');
         postContainer.insertAdjacentHTML('beforeend', newPostHTML);
       }else{
@@ -42,7 +45,6 @@ function handlePost(){
       }
     });
 
-    request.setRequestHeader('Content-Type','application/json');
     request.send(requestPostBody);
 
     hidePostModal();
