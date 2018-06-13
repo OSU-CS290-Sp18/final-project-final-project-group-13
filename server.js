@@ -6,6 +6,8 @@ var port = process.env.PORT || 3000;
 app.engine('handlebars', exphbs({ defaultLayout: 'base' })); //set default page and view engine
 app.set('view engine', 'handlebars'); //set view engin
 var MongoClient = require('mongodb').MongoClient; //get mongo client
+var bodyParser = require('body-parser');
+app.user(bodyParser.json());
 
 var mongoHost = process.env.MONGO_HOST; //set mongo variables
 var mongoPort = process.env.MONGO_PORT || 27017;
@@ -54,6 +56,37 @@ app.get('/', function (req, res) { //home page
             });
         }
     });
+});
+
+app.post('/posts/:postID/addResponse', function (req, res, next) {
+  if(req.body && req.body.responseText && req.body.requestAuthor){
+    db.posts[req.params.postID].insertOne({
+      responseText: req.body.responseText,
+      responseAuthor: req.body.responseAuthor
+    });
+  }
+});
+
+app.post('/addPost', function (req, res, next){
+  if(req.body && req.body.postTitle && req.body.postAuthor && req.body.postText){
+    var orderedPosts = posts.find();
+    var orderedArray;
+    orderedPosts.toArray(function (err, orderedArray) { //convert cursor to array
+        if (err) {
+            res.status(500).send("Error fetching posts from DB."); //handle any errors
+        } else {
+            var newID = parseInt(orderedArray[orderedArray.length - 1].postID)+1;
+            var postObj = {
+              postID: newID,
+              postTitle: req.body.postText,
+              postAuthor: req.body.postAuthor,
+              postText: req.body.postText
+            };
+        }
+    });
+  }else{
+    res.status(400).send("Add post request must specifiy a postTitle, postAuthor, and postText");
+  }
 });
 
 app.use(express.static('public')); //serve other files if requested
