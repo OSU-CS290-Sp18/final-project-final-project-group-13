@@ -7,8 +7,8 @@ function getPostID(){
 function handlePost(){
   /*add post*/
   let postTitle = document.getElementById('post-title-input').value;
-  let postAuthor = document.getElementById('post-auth-inpuit').value;
-  let postText = document.getElementById('post-text-input').value;
+  let postAuthor = document.getElementById('post-auth-inpuit').value.trim();
+  let postText = document.getElementById('post-text-input').value.trim();
 
   if(!postAuthor){
     postAuthor = "Anonymous";
