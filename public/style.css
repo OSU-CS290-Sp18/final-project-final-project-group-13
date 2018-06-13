@@ -16,15 +16,15 @@ header {
 .create-post-b {
 	display: block;
 	height: 40px;
-	width: 100px;
+	width: 110px;
 	border: 2px solid #dff4bc;
 	color: #dff4bc;
 	font-size: 20px;
-	font-weight: bold;
+	font-weight: 600;
 	background-color: #544643;
 	position: fixed;
-	bottom: 15px;
-	left: 15px;
+	bottom: 20px;
+	left: 20px;
 	border-radius: 5px;
 }
 
