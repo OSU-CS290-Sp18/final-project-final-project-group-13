@@ -35,7 +35,7 @@ function handlePost(){
         };
         var newPostHTML = Handlebars.templates.postTemplate(newPostContext);
         let postContainer = document.querySelector('.post-container');
-        postContainer.insertAdjacentHTML('beforeend', newPostHTML);
+        postContainer.insertAdjacentHTML('afterbegin', newPostHTML);
       }else{
         alert("Error creating post");
       }
@@ -125,7 +125,7 @@ function handleReply(){
         };
         var newReplyHTML = Handlebars.templates.response(newReplyContent);
         let replyContainer = document.querySelector('.post-responses');
-        replyContainer.insertAdjacentHTML('beforeend', newReplyHTML);
+        replyContainer.insertAdjacentHTML('afterbegin', newReplyHTML);
       }else{
         alert("There was an error creating your reply");
       }

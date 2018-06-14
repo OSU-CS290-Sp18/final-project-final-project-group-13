@@ -31,12 +31,17 @@ app.get('/posts/:postID', function (req, res, next) { //handle single post page
         } else {
             console.log('Loading post page'); //log status
             if (postArray[0]) { //check if post exists in database
+                var reversedArray = [];
+                for (var x = postArray[0].responses.length - 1; x >= 0; x--) {
+                    var y = postArray[0].responses.length - x + 1;
+                    reversedArray[y] = postArray[0].responses[x];
+                }
                 console.log('ID valid rendering post');  //log status
                 res.status(200).render('postPage', { //render page using array data
                     postTitle: postArray[0].postTitle,
                     postAuthor: postArray[0].postAuthor,
                     postText: postArray[0].postText,
-                    responses: postArray[0].responses
+                    responses: reversedArray
                 });
             }
         }
@@ -50,9 +55,14 @@ app.get('/', function (req, res) { //home page
         if (err) {
             res.status(500).send("Error fetching posts from DB."); //handle errors
         } else {
+            var reversedArray = [];
+            for (var x = postArray.length - 1; x >= 0; x--) {
+                var y = postArray.length - x + 1;
+                reversedArray[y] = postArray[x];
+            }
             console.log('Rendering templated home page'); //log
             res.status(200).render('home', { //render page
-                posts: postArray //render with database data
+                posts: reversedArray //render with database data
             });
         }
     });
@@ -100,7 +110,7 @@ app.post('/addPost', function (req, res, next){
         if (err) {
             res.status(500).send("Error fetching posts from DB."); //handle any errors
         } else {
-            var newID = parseInt(orderedArray[orderedArray.length - 1].postID)+1;
+            var newID = orderedArray.length;
             var stringID = newID.toString();
             var postObj = {
               postID: stringID,
