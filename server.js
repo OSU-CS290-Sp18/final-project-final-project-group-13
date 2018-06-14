@@ -74,8 +74,6 @@ app.post('/posts/:postID/addResponse', function (req, res, next) {
                 var currentPost = postArray[0];
                 var ID = currentPost.responses.length;
                 var strID = ID.toString();
-                console.log(req.body.responseAuthor);
-                console.log(req.body.responseText);
                 db.collection('posts').update(
                     { "postID": postID },
                     {
@@ -102,7 +100,6 @@ app.post('/addPost', function (req, res, next){
         if (err) {
             res.status(500).send("Error fetching posts from DB."); //handle any errors
         } else {
-            console.log("detected post req");
             var newID = parseInt(orderedArray[orderedArray.length - 1].postID)+1;
             var stringID = newID.toString();
             var postObj = {
@@ -121,8 +118,28 @@ app.post('/addPost', function (req, res, next){
   }
 });
 
-app.get('/getId', function (req, res, next) {
+app.delete('/', function (req, res) {
+    var target_id = req.body.deleteID;
+    posts.deleteOne({
+        postID: target_id
+    });
+    res.status(200).send('DELETE request to homepage');
+});
 
+app.delete('/posts/:postID/:responseID', function (req, res) {
+    var postID = req.params.postID;
+    var resID = req.params.responseID;
+    db.collection('posts').update(
+        {"postID" : postID},
+        {
+            "$pull": {
+                "responses": {
+                    "responseID": resID
+                }
+            }
+        }
+    );
+    res.status(200).send('DELETE request to post page');
 });
 
 app.use(express.static('public')); //serve other files if requested

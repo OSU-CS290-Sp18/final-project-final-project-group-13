@@ -116,10 +116,10 @@ function handleReply(){
     request.setRequestHeader('Content-Type','application/json');
 
     request.addEventListener('load', function (event) {
-      console.log("listener triggered" + event.target.status);
       if (event.target.status === 200) {
-          console.log("what");
+        var id = event.target.response;
         let newReplyContent = {
+          responseID : id,
           responseAuthor: responseAuthor,
           responseText: responseText
         };
@@ -176,9 +176,6 @@ window.addEventListener('DOMContentLoaded', function(){
     for(let i = 0; i < postModalHideButtons.length; i++){
       postModalHideButtons[i].addEventListener('click', hidePostModal);
     }
-
-    let deletePostButton = document.getElementsByClassName('del-post-b');
-    deletePostButton.addEventListener('click', handlePostDelete);
   }
 
   if(window.location.href.includes('posts')){
@@ -192,18 +189,54 @@ window.addEventListener('DOMContentLoaded', function(){
     for(let i = 0; i < replyModalHideButtons.length; i++){
       replyModalHideButtons[i].addEventListener('click', hideReplyModal);
     }
-
-    let deleteReplyButton = document.getElementsByClassName('del-reply-b');
-    deleteReplyButton.addEventListener('click', handleReplyDelete);
   }
 });
 
 window.addEventListener('click', function (event) {
-    if(event.target.class="del-post-b"){
+    if (event.target.className === "del-post-b") {
         var target_id = event.target.id;
-        console.log(target_id);
-    } else if (event.target.class = "del-reply-b") {
+        let request = new XMLHttpRequest();
+        let delReplyURL = location.pathname;
+       
+        request.open("DELETE", delReplyURL);
+        let requestReplyBody = JSON.stringify({
+            deleteID: target_id
+        });
+        request.setRequestHeader('Content-Type', 'application/json');
+
+        request.addEventListener('load', function (event) {
+            if (event.target.status === 200) {
+                console.log("post successfully deleted");
+            } else {
+                alert("There was an error creating your reply");
+            }
+        });
+        request.send(requestReplyBody);
+        event.stopPropagation();
+        var delPost = document.getElementById(target_id);
+        delPost.remove();
+    }else if (event.target.className === "del-reply-b") {
         var target_id = event.target.id;
-        console.log(target_id);
+        let request = new XMLHttpRequest();
+        let delReplyURL = location.pathname + "/" + target_id;
+
+        request.open("DELETE", delReplyURL);
+        let requestReplyBody = JSON.stringify({
+            deleteID: target_id
+        });
+        request.setRequestHeader('Content-Type', 'application/json');
+
+        request.addEventListener('load', function (event) {
+            if (event.target.status === 200) {
+                console.log("reply successfully deleted");
+            } else {
+                alert("There was an error creating your reply");
+            }
+        });
+
+        request.send(requestReplyBody);
+        event.stopPropagation();
+        var delResponse = document.getElementById(target_id);
+        delResponse.remove();
     }
 });
