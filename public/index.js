@@ -13,7 +13,6 @@ function handlePost(){
     alert("You have not filled in all required fields!");
   }else{
     let request = new XMLHttpRequest();
-    //let postID = getPostID();
     let postURL = '/addPost';
 
     request.open("POST", postURL);
@@ -96,13 +95,13 @@ function hidePostModal(){
 /*------------------------- Handle Reply ----------------------------*/
 function handleReply(){
   /*add reply*/
-  let responseAuthor = document.getElementById('reply-auth-input');
-  let responseText = document.getElementById('reply-text-input');
+  let responseAuthor = document.getElementById('reply-auth-input').value;
+  let responseText = document.getElementById('reply-text-input').value;
 
-  if(!replyAuthor){
-    replyAuthor = "Anonymous";
+  if(!responseAuthor){
+    responseAuthor = "Anonymous";
   }
-  if(!replyText){
+  if(!responseText){
     alert("You have not filled in all required fields!");
   }
   else{
@@ -116,13 +115,15 @@ function handleReply(){
     });
     request.setRequestHeader('Content-Type','application/json');
 
-    request.addEventListener('load', function(event){
-      if(event.target.status === 200){
+    request.addEventListener('load', function (event) {
+      console.log("listener triggered" + event.target.status);
+      if (event.target.status === 200) {
+          console.log("what");
         let newReplyContent = {
-          responseText: responseText,
-          responseAuthor: responseAuthor
+          responseAuthor: responseAuthor,
+          responseText: responseText
         };
-        var newReplyHTML = Handlebars.templates.response(newReplyHTML);
+        var newReplyHTML = Handlebars.templates.response(newReplyContent);
         let replyContainer = document.querySelector('.post-responses');
         replyContainer.insertAdjacentHTML('beforeend', newReplyHTML);
       }else{
@@ -148,7 +149,7 @@ function showReplyModal(){
 
 function clearReplyModal(){
   let replyInputElements = document.querySelectorAll('#reply-modal input')
-  for(let i = 0; i < inputElements.length; i++){
+  for(let i = 0; i < replyInputElements.length; i++){
     replyInputElements[i].value = '';
   }
 }
@@ -195,4 +196,14 @@ window.addEventListener('DOMContentLoaded', function(){
     let deleteReplyButton = document.getElementsByClassName('del-reply-b');
     deleteReplyButton.addEventListener('click', handleReplyDelete);
   }
+});
+
+window.addEventListener('click', function (event) {
+    if(event.target.class="del-post-b"){
+        var target_id = event.target.id;
+        console.log(target_id);
+    } else if (event.target.class = "del-reply-b") {
+        var target_id = event.target.id;
+        console.log(target_id);
+    }
 });

@@ -59,12 +59,39 @@ app.get('/', function (req, res) { //home page
 });
 
 app.post('/posts/:postID/addResponse', function (req, res, next) {
-  if(req.body && req.body.responseText && req.body.requestAuthor){
-    db.posts[req.params.postID].insertOne({
-      responseText: req.body.responseText,
-      responseAuthor: req.body.responseAuthor
-    });
-  }
+    console.log("responded to server");
+    var postID = req.params.postID;
+    if (req.body && req.body.responseText && req.body.responseAuthor) {
+        console.log("setting up a response");
+        var postArray;
+        var postCursor = posts.find({
+            postID: postID
+        });
+        postCursor.toArray(function (err, postArray) { //convert cursor to array
+            if (err) {
+                res.status(500).send("Error fetching posts from DB."); //handle any errors
+            } else {
+                var currentPost = postArray[0];
+                var ID = currentPost.responses.length;
+                var strID = ID.toString();
+                console.log(req.body.responseAuthor);
+                console.log(req.body.responseText);
+                db.collection('posts').update(
+                    { "postID": postID },
+                    {
+                        "$push": {
+                            "responses": {
+                                "responseID": strID,
+                                "responseAuthor": req.body.responseAuthor,
+                                "responseText": req.body.responseText
+                            }
+                        }
+                     }
+                );
+                res.status(200).send(strID);
+            }
+       });
+    }
 });
 
 app.post('/addPost', function (req, res, next){
