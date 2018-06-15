@@ -65,7 +65,7 @@ function showPostModal(){
 }
 
 function clearPostModal(){                                                                          /*Clear post modal text fields*/
-  let inputElements = document.querySelectorAll('#post-modal input');
+  let inputElements = document.querySelectorAll('#post-text-input');
   for(let i = 0; i < inputElements.length; i++){
     inputElements[i].value = '';
   }
