@@ -186,51 +186,51 @@ window.addEventListener('DOMContentLoaded', function(){
   }
 });
 
-window.addEventListener('click', function (event) {
-    if (event.target.className === "del-post-b") {
-        var target_id = event.target.id;
-        let request = new XMLHttpRequest();
-        let delReplyURL = location.pathname;
+window.addEventListener('click', function (event) { //handle delete button functionality
+    if (event.target.className === "del-post-b") { //check if event is the post button
+        var target_id = event.target.id; //get target id from event
+        let request = new XMLHttpRequest(); //create request
+        let delReplyURL = location.pathname; //build url
 
-        request.open("DELETE", delReplyURL);
-        let requestReplyBody = JSON.stringify({
+        request.open("DELETE", delReplyURL); //open request
+        let requestReplyBody = JSON.stringify({ //make json body
             deleteID: target_id
         });
         request.setRequestHeader('Content-Type', 'application/json');
 
-        request.addEventListener('load', function (event) {
+        request.addEventListener('load', function (event) { //add success listener
             if (event.target.status === 200) {
-                console.log("post successfully deleted");
+                console.log("post successfully deleted"); //log response
             } else {
                 alert("There was an error creating your reply");
             }
         });
-        request.send(requestReplyBody);
-        event.stopPropagation();
+        request.send(requestReplyBody); //send request
+        event.stopPropagation(); //stop propegation
         var delPost = document.getElementById(target_id);
-        delPost.remove();
+        delPost.remove(); //remove post
     }else if (event.target.className === "del-reply-b") {
-        var target_id = event.target.id;
-        let request = new XMLHttpRequest();
-        let delReplyURL = location.pathname + "/" + target_id;
+        var target_id = event.target.id; //get target id
+        let request = new XMLHttpRequest(); //create request
+        let delReplyURL = location.pathname + "/" + target_id; //create url
 
-        request.open("DELETE", delReplyURL);
-        let requestReplyBody = JSON.stringify({
+        request.open("DELETE", delReplyURL); //open request
+        let requestReplyBody = JSON.stringify({ //create request body
             deleteID: target_id
         });
         request.setRequestHeader('Content-Type', 'application/json');
 
-        request.addEventListener('load', function (event) {
+        request.addEventListener('load', function (event) { //add success listener
             if (event.target.status === 200) {
-                console.log("reply successfully deleted");
+                console.log("reply successfully deleted"); //log response
             } else {
                 alert("There was an error creating your reply");
             }
         });
 
-        request.send(requestReplyBody);
-        event.stopPropagation();
+        request.send(requestReplyBody); //send request
+        event.stopPropagation(); //stop propegation
         var delResponse = document.getElementById(target_id);
-        delResponse.remove();
+        delResponse.remove(); //remove response
     }
 });
