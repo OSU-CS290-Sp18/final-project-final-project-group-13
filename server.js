@@ -2,12 +2,12 @@ var express = require('express'); //require express, express-handlebars
 var exphbs = require('express-handlebars');
 
 var app = express(); //setup and start server
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3000; //set port
 app.engine('handlebars', exphbs({ defaultLayout: 'base' })); //set default page and view engine
 app.set('view engine', 'handlebars'); //set view engin
 var MongoClient = require('mongodb').MongoClient; //get mongo client
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
+var bodyParser = require('body-parser'); //require body-parser
+app.use(bodyParser.json()); //launch bp
 
 var mongoHost = process.env.MONGO_HOST; //set mongo variables
 var mongoPort = process.env.MONGO_PORT || 27017;
@@ -15,8 +15,9 @@ var mongoUser = process.env.MONGO_USER;
 var mongoPassword = process.env.MONGO_PASSWORD;
 var mongoDBName = process.env.MONGO_DB_NAME;
 var mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword + '@' + mongoHost + ':' + mongoPort + '/' + mongoDBName; //create URL
+//console.log(mongoURL); //used for debugging
 var mongoDBDatabase; //create globals for db
-var db;
+var db; //create globals for db
 var posts;
 
 app.get('/posts/:postID', function (req, res, next) { //handle single post page
@@ -31,14 +32,14 @@ app.get('/posts/:postID', function (req, res, next) { //handle single post page
         } else {
             console.log('Loading post page'); //log status
             if (postArray[0]) { //check if post exists in database
-                var reversedArray = [];
+                var reversedArray = []; //reverse array so it is printed in chronological order
                 for (var x = postArray[0].responses.length - 1; x >= 0; x--) {
                     var y = postArray[0].responses.length - x + 1;
                     reversedArray[y] = postArray[0].responses[x];
                 }
                 console.log('ID valid rendering post');  //log status
                 res.status(200).render('postPage', { //render page using array data
-                    postTitle: postArray[0].postTitle,
+                    postTitle: postArray[0].postTitle, //set data for template
                     postAuthor: postArray[0].postAuthor,
                     postText: postArray[0].postText,
                     responses: reversedArray
@@ -55,7 +56,7 @@ app.get('/', function (req, res) { //home page
         if (err) {
             res.status(500).send("Error fetching posts from DB."); //handle errors
         } else {
-            var reversedArray = [];
+            var reversedArray = []; //reverse array so it prints in chronological order
             for (var x = postArray.length - 1; x >= 0; x--) {
                 var y = postArray.length - x + 1;
                 reversedArray[y] = postArray[x];
@@ -68,26 +69,25 @@ app.get('/', function (req, res) { //home page
     });
 });
 
-app.post('/posts/:postID/addResponse', function (req, res, next) {
-    console.log("responded to server");
-    var postID = req.params.postID;
-    if (req.body && req.body.responseText && req.body.responseAuthor) {
-        console.log("setting up a response");
+app.post('/posts/:postID/addResponse', function (req, res, next) { //handle adding a new response
+    var postID = req.params.postID; //get id from url
+    if (req.body && req.body.responseText && req.body.responseAuthor) { //check if required body elements exist
+        console.log("setting up a response"); //log
         var postArray;
-        var postCursor = posts.find({
+        var postCursor = posts.find({ //get post array
             postID: postID
         });
         postCursor.toArray(function (err, postArray) { //convert cursor to array
             if (err) {
                 res.status(500).send("Error fetching posts from DB."); //handle any errors
             } else {
-                var currentPost = postArray[0];
-                var ID = currentPost.responses.length;
-                var strID = ID.toString();
-                db.collection('posts').update(
+                var currentPost = postArray[0]; //get current post
+                var ID = currentPost.responses.length; //get id for new post
+                var strID = ID.toString(); //convert id to string
+                db.collection('posts').update( //find correct post
                     { "postID": postID },
                     {
-                        "$push": {
+                        "$push": { //push in a new response
                             "responses": {
                                 "responseID": strID,
                                 "responseAuthor": req.body.responseAuthor,
@@ -96,13 +96,13 @@ app.post('/posts/:postID/addResponse', function (req, res, next) {
                         }
                      }
                 );
-                res.status(200).send(strID);
+                res.status(200).send(strID); //send status and response containing id as a string
             }
        });
     }
 });
 
-app.post('/addPost', function (req, res, next){
+app.post('/addPost', function (req, res, next){ //handle
   if(req.body && req.body.postTitle && req.body.postAuthor && req.body.postText){
     var orderedPosts = posts.find();
     var orderedArray;
@@ -110,46 +110,46 @@ app.post('/addPost', function (req, res, next){
         if (err) {
             res.status(500).send("Error fetching posts from DB."); //handle any errors
         } else {
-            var newID = orderedArray.length;
-            var stringID = newID.toString();
-            var postObj = {
+            var newID = orderedArray.length; //get id based on length of array
+            var stringID = newID.toString(); //convert id to string
+            var postObj = { //create new post object
               postID: stringID,
               postTitle: req.body.postTitle,
               postAuthor: req.body.postAuthor,
               postText: req.body.postText,
               responses: []
             };
-            posts.insertOne(postObj);
-            res.status(200).send(stringID);
+            posts.insertOne(postObj); //insert new post
+            res.status(200).send(stringID); //set status and send stringID
         }
     });
   }else{
-    res.status(400).send("Add post request must specifiy a postTitle, postAuthor, and postText");
+    res.status(400).send("Add post request must specifiy a postTitle, postAuthor, and postText"); //send error code if failed
   }
 });
 
-app.delete('/', function (req, res) {
-    var target_id = req.body.deleteID;
-    posts.deleteOne({
+app.delete('/', function (req, res) { //handle deleting posts
+    var target_id = req.body.deleteID; //get id of deletion target
+    posts.deleteOne({ //delete item with target id
         postID: target_id
     });
-    res.status(200).send('DELETE request to homepage');
+    res.status(200).send('DELETE request to homepage'); //send status and message
 });
 
-app.delete('/posts/:postID/:responseID', function (req, res) {
-    var postID = req.params.postID;
-    var resID = req.params.responseID;
-    db.collection('posts').update(
-        {"postID" : postID},
+app.delete('/posts/:postID/:responseID', function (req, res) { //handle delete response
+    var postID = req.params.postID; //get post id from URL
+    var resID = req.params.responseID; //get response id from URL
+    db.collection('posts').update( //update post collection
+        {"postID" : postID}, //find correct post according to postID
         {
-            "$pull": {
+            "$pull": { //pull correct response from array according to resID
                 "responses": {
                     "responseID": resID
                 }
             }
         }
     );
-    res.status(200).send('DELETE request to post page');
+    res.status(200).send('DELETE request to post page'); //set status and send a response
 });
 
 app.use(express.static('public')); //serve other files if requested
