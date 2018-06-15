@@ -102,6 +102,8 @@ body {
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 10px;
+    margin-top: 100px;
+    border: 1px solid grey;
 }
 
 .post-modal-body {
@@ -118,6 +120,7 @@ body {
 #post-text-input {
     height: 150px;
     margin-left: 17px;
+    width: 167px;
 }
 
 #post-auth-input {
@@ -127,6 +130,34 @@ body {
 #post-title-input {
     margin-left: 10px;
     margin-bottom: 2px;
+}
+
+#post-modal-cancel {
+    display: inline-block;
+    background-color: #544643;
+    outline: none;
+    border: 1px solid grey;
+    color: #dff4bc;
+    height: 25px;
+    width: 75px;
+}
+
+#post-modal-cancel:hover {
+	cursor: pointer;
+}
+
+#post-modal-accept {
+    display: inline-block;
+    background-color: #544643;
+    outline: none;
+    border: 1px solid grey;
+    color: #dff4bc;
+    height: 25px;
+    width: 75px;
+}
+
+#post-modal-accept {
+    cursor: pointer;
 }
 
 .hidden{
