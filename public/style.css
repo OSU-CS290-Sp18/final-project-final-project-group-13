@@ -40,7 +40,7 @@ body {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
 	background: url("http://images.all-free-download.com/images/graphicthumb/dog_foot_prints_background_repeating_design_6828604.jpg") repeat;
-	}
+}
 
 .post-frame {
 	display: block;
@@ -131,4 +131,75 @@ body {
 
 .hidden{
 	display: none;
+}
+
+.response-frame {
+	display: block;
+	background-color: white;
+	border: 1px solid grey;
+	margin: 25px;
+	padding-top: 0px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.post-container {
+	display: block;
+	background-color: white;
+	border: 4px solid grey;
+	margin: 25px;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.page-author {
+  text-align: right;
+}
+
+.del-reply-b {
+  position: relative;
+  float: right;
+  top: -20px;
+}
+
+.reply-modal-dialog {
+	display: block;
+	background-color: white;
+	border: 4px solid grey;
+	margin: 25px;
+	padding-top: 10px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.reply-modal-header > .reply-modal-hide {
+  position: relative;
+  float: right;
+  top: -20px;
+}
+
+.create-reply-b {
+	display: block;
+	height: 40px;
+	width: 110px;
+	border: 2px solid #dff4bc;
+	color: #dff4bc;
+	font-size: 20px;
+	font-weight: 600;
+	background-color: #544643;
+	position: fixed;
+	bottom: 20px;
+	left: 20px;
+	border-radius: 5px;
+}
+
+.create-reply-b:hover {
+	color: #544643;
+	background-color: #dff4bc;
+	border: 2px solid #544643;
+	cursor: pointer;
 }
