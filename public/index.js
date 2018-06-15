@@ -5,17 +5,17 @@ function handlePost(){
   let postAuthor = document.getElementById('post-auth-input').value.trim();
   let postText = document.getElementById('post-text-input').value.trim();
 
-  if(!postAuthor){
+  if(!postAuthor){                                                                                  /*Set username if unspecified*/
     postAuthor = "Anonymous";
   }
 
-  if(!postTitle || !postText){
+  if(!postTitle || !postText){                                                                      /*Alert for required text fields*/
     alert("You have not filled in all required fields!");
   }else{
     let request = new XMLHttpRequest();
     let postURL = '/addPost';
 
-    request.open("POST", postURL);
+    request.open("POST", postURL);                                                                  /*Open post api*/
     let requestPostBody = JSON.stringify({
       postTitle: postTitle,
       postAuthor: postAuthor,
@@ -24,7 +24,7 @@ function handlePost(){
     });
     request.setRequestHeader('Content-Type','application/json');
 
-    request.addEventListener('load', function(event){
+    request.addEventListener('load', function(event){                                               /*Create a new post if correct event is triggered*/
       if(event.target.status === 200){
         var id = event.target.response;
         let newPostContext = {
@@ -33,26 +33,23 @@ function handlePost(){
           postAuthor: postAuthor,
           postText: postText
         };
-        var newPostHTML = Handlebars.templates.postTemplate(newPostContext);
+        var newPostHTML = Handlebars.templates.postTemplate(newPostContext);                        /*Generate HTML based off of post template*/
         let postContainer = document.querySelector('.post-container');
-        postContainer.insertAdjacentHTML('afterbegin', newPostHTML);
+        postContainer.insertAdjacentHTML('afterbegin', newPostHTML);                                /*Insert new HTML to post container*/
       }else{
         alert("Error creating post");
       }
     });
 
-    request.send(requestPostBody);
+    request.send(requestPostBody);                                                                  /*send content to server and hide*/
 
     hidePostModal();
 
   }
 }
 
-function handlePostDelete(){
-
-}
 function showPostModal(){
-  let modal = document.getElementById('post-modal');
+  let modal = document.getElementById('post-modal');                                                /*Show post modal and hide post page content*/
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
   let buttonHide = document.querySelector('button');
@@ -67,15 +64,16 @@ function showPostModal(){
   mainHide.classList.add('hidden');
 }
 
-function clearPostModal(){
-  let inputElements = document.querySelectorAll('#post-modal input');
+function clearPostModal(){                                                                          /*Clear post modal text fields*/
+  let inputElements = document.getElementsByClassname('post-input-element');
   for(let i = 0; i < inputElements.length; i++){
-    inputElements[i].value = '';
+    let inputs = inputElements[i].querySelector('input, textarea');
+    inputs.value = '';
   }
 }
 
 function hidePostModal(){
-  let modal = document.getElementById('post-modal');
+  let modal = document.getElementById('post-modal');                                                /*Hides modal and shows hidden post page content*/
   let modalBackdrop = document.getElementById('post-modal-backdrop');
 
   let buttonHide = document.querySelector('button');
@@ -98,7 +96,7 @@ function handleReply(){
   let responseAuthor = document.getElementById('reply-auth-input').value;
   let responseText = document.getElementById('reply-text-input').value;
 
-  if(!responseAuthor){
+  if(!responseAuthor){                                                                              /*Checking/Setting reply text fields*/
     responseAuthor = "Anonymous";
   }
   if(!responseText){
@@ -108,14 +106,14 @@ function handleReply(){
     let request = new XMLHttpRequest();
     let replyURL = location.pathname + "/addResponse";
 
-    request.open("POST", replyURL);
+    request.open("POST", replyURL);                                                                 /*Open reply post api*/
     let requestReplyBody = JSON.stringify({
       responseText: responseText,
       responseAuthor: responseAuthor
     });
     request.setRequestHeader('Content-Type','application/json');
 
-    request.addEventListener('load', function (event) {
+    request.addEventListener('load', function (event){                                              /*Create content to be templated */
       if (event.target.status === 200) {
         var id = event.target.response;
         let newReplyContent = {
@@ -123,23 +121,20 @@ function handleReply(){
           responseAuthor: responseAuthor,
           responseText: responseText
         };
-        var newReplyHTML = Handlebars.templates.response(newReplyContent);
+        var newReplyHTML = Handlebars.templates.response(newReplyContent);                          /*Create HTML*/
         let replyContainer = document.querySelector('.post-responses');
-        replyContainer.insertAdjacentHTML('afterbegin', newReplyHTML);
+        replyContainer.insertAdjacentHTML('afterbegin', newReplyHTML);                              /*Add reply html to reply container*/
       }else{
         alert("There was an error creating your reply");
       }
     });
 
-    request.send(requestReplyBody);
+    request.send(requestReplyBody);                                                                 /*Send reply html to server*/
     hideReplyModal();
   }
 }
 
-function handleReplyDelete(){
-
-}
-function showReplyModal(){
+function showReplyModal(){                                                                          /*Show reply modal content*/
   let replyModal = document.getElementById('reply-modal');
   let replyModalBackdrop = document.getElementById('reply-modal-backdrop');
 
@@ -147,14 +142,14 @@ function showReplyModal(){
   replyModalBackdrop.classList.remove('hidden');
 }
 
-function clearReplyModal(){
+function clearReplyModal(){                                                                         /*Clear modal text fields*/
   let replyInputElements = document.querySelectorAll('#reply-modal input')
   for(let i = 0; i < replyInputElements.length; i++){
     replyInputElements[i].value = '';
   }
 }
 
-function hideReplyModal(){
+function hideReplyModal(){                                                                          /*Hide modal and clear text fields*/
   let replyModal = document.getElementById('reply-modal');
   let replyModalBackdrop = document.getElementById('reply-modal-backdrop');
 
@@ -165,78 +160,78 @@ function hideReplyModal(){
 }
 
 window.addEventListener('DOMContentLoaded', function(){
-  if(window.location.href.includes('posts') === false){
+  if(window.location.href.includes('posts') === false){                                             /*Create post variables and handle post events*/
     let addPostButton = document.getElementsByClassName('create-post-b');
     addPostButton[0].addEventListener('click', showPostModal);
 
     let postModalAccept = document.getElementById('post-modal-accept');
     postModalAccept.addEventListener('click', handlePost);
 
-    let postModalHideButtons = document.getElementsByClassName('post-modal-hide');
+    let postModalHideButtons = document.getElementsByClassName('post-modal-hide');                  /*Select buttons to hide modal when click event triggered*/
     for(let i = 0; i < postModalHideButtons.length; i++){
       postModalHideButtons[i].addEventListener('click', hidePostModal);
     }
   }
 
-  if(window.location.href.includes('posts')){
+  if(window.location.href.includes('posts')){                                                       /*Create reply variables and handle reply events*/
     let replyPostButton = document.getElementsByClassName('create-reply-b');
     replyPostButton[0].addEventListener('click', showReplyModal);
 
     let replyModalAccept = document.getElementById('reply-modal-accept');
     replyModalAccept.addEventListener('click', handleReply);
 
-    let replyModalHideButtons = document.getElementsByClassName('reply-modal-hide');
+    let replyModalHideButtons = document.getElementsByClassName('reply-modal-hide');                /*Select buttons to hide reply modal when click event triggered*/
     for(let i = 0; i < replyModalHideButtons.length; i++){
       replyModalHideButtons[i].addEventListener('click', hideReplyModal);
     }
   }
 });
 
-window.addEventListener('click', function (event) {
-    if (event.target.className === "del-post-b") {
-        var target_id = event.target.id;
-        let request = new XMLHttpRequest();
-        let delReplyURL = location.pathname;
-       
-        request.open("DELETE", delReplyURL);
-        let requestReplyBody = JSON.stringify({
+window.addEventListener('click', function (event) { //handle delete button functionality
+    if (event.target.className === "del-post-b") { //check if event is the post button
+        var target_id = event.target.id; //get target id from event
+        let request = new XMLHttpRequest(); //create request
+        let delReplyURL = location.pathname; //build url
+
+        request.open("DELETE", delReplyURL); //open request
+        let requestReplyBody = JSON.stringify({ //make json body
             deleteID: target_id
         });
         request.setRequestHeader('Content-Type', 'application/json');
 
-        request.addEventListener('load', function (event) {
+        request.addEventListener('load', function (event) { //add success listener
             if (event.target.status === 200) {
-                console.log("post successfully deleted");
+                console.log("post successfully deleted"); //log response
             } else {
                 alert("There was an error creating your reply");
             }
         });
-        request.send(requestReplyBody);
-        event.stopPropagation();
+        request.send(requestReplyBody); //send request
+        event.stopPropagation(); //stop propegation
         var delPost = document.getElementById(target_id);
-        delPost.remove();
+        delPost.remove(); //remove post
     }else if (event.target.className === "del-reply-b") {
-        var target_id = event.target.id;
-        let request = new XMLHttpRequest();
-        let delReplyURL = location.pathname + "/" + target_id;
+        var target_id = event.target.id; //get target id
+        let request = new XMLHttpRequest(); //create request
+        let delReplyURL = location.pathname + "/" + target_id; //create url
 
-        request.open("DELETE", delReplyURL);
-        let requestReplyBody = JSON.stringify({
+        request.open("DELETE", delReplyURL); //open request
+        let requestReplyBody = JSON.stringify({ //create request body
             deleteID: target_id
         });
         request.setRequestHeader('Content-Type', 'application/json');
 
-        request.addEventListener('load', function (event) {
+        request.addEventListener('load', function (event) { //add success listener
             if (event.target.status === 200) {
-                console.log("reply successfully deleted");
+                console.log("reply successfully deleted"); //log response
             } else {
                 alert("There was an error creating your reply");
             }
         });
 
-        request.send(requestReplyBody);
-        event.stopPropagation();
+        request.send(requestReplyBody); //send request
+        event.stopPropagation(); //stop propegation
         var delResponse = document.getElementById(target_id);
-        delResponse.remove();
+        delResponse.remove(); //remove response
     }
 });
