@@ -65,9 +65,9 @@ function showPostModal(){
 }
 
 function clearPostModal(){                                                                          /*Clear post modal text fields*/
-  let inputElements = document.getElementsByClassname('post-input-element');
+  let inputElements = document.getElementsByClassName('post-input-element');
   for(let i = 0; i < inputElements.length; i++){
-    let inputs = inputElements[i].querySelector('input, textarea');
+    var inputs = inputElements[i].querySelector('input, textarea');
     inputs.value = '';
   }
 }
